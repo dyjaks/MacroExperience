@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MacroExperience</string>
     <string name="action_settings">Settings</string>
+
+    <string name="bw_tab">BodyWeight</string>
+    <string name="meal_tab">Meals</string>
 </resources>

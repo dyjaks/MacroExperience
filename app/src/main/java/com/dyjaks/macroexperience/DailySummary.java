@@ -4,10 +4,16 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TabHost;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DailySummary extends AppCompatActivity {
 
@@ -18,6 +24,21 @@ public class DailySummary extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TabHost host = (TabHost)findViewById(R.id.tabHost);
+        host.setup();
+
+        // BodyWeight tab
+        TabHost.TabSpec spec = host.newTabSpec(getString(R.string.bw_tab));
+        spec.setContent(R.id.bodyWeightLayout);
+        spec.setIndicator(getString(R.string.bw_tab));
+        host.addTab(spec);
+
+        // Meals tab
+        spec = host.newTabSpec(getString(R.string.meal_tab));
+        spec.setContent(R.id.mealLayout);
+        spec.setIndicator(getString(R.string.meal_tab));
+        host.addTab(spec);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,6 +47,18 @@ public class DailySummary extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        List<Food> foodItems = new ArrayList<Food>();
+        Food a = new Food("pizza", "slice", "1", 8.8, 20.0, 50.0, 10.0, 20.0);
+        Food b = new Food("pasta", "bowl", "2/3", 8.8, 20.0, 50.0, 10.0, 20.0);
+
+        foodItems.add(a);
+        foodItems.add(b);
+
+        IngredientListAdapter ila = new IngredientListAdapter(this, this.getApplicationContext(), foodItems);
+        ((ListView) findViewById(R.id.mealListView)).setAdapter(ila);
+
     }
 
     @Override
