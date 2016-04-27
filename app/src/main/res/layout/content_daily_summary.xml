@@ -32,19 +32,25 @@
                     android:id="@+id/bodyWeightLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" />
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/weightListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/mealLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#5b89ff"
-                    android:orientation="vertical">
+                    android:background="#ffffff"
+                    android:padding="16dp" >
 
-                    <ListView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/mealListView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/mealListView" />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
             </FrameLayout>

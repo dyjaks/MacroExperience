@@ -1,28 +1,42 @@
 package com.dyjaks.macroexperience;
 
+import android.app.Activity;
 import android.os.Bundle;
 import com.github.clans.fab.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListViewCompat;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.TabHost;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailySummary extends AppCompatActivity {
+public class DailySummary extends Activity {
+
+    private List<Food> foodItems;
+    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_daily_summary);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
+        rv = ((RecyclerView)findViewById(R.id.mealListView));
+        rv.setHasFixedSize(false);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+        initData();
+        initAdapter();
 
         TabHost host = (TabHost)findViewById(R.id.tabHost);
         host.setup();
@@ -47,18 +61,6 @@ public class DailySummary extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-
-        List<Food> foodItems = new ArrayList<Food>();
-        Food a = new Food("pizza", "slice", "1", 8.8, 20.0, 50.0, 10.0, 20.0);
-        Food b = new Food("pasta", "bowl", "2/3", 8.8, 20.0, 50.0, 10.0, 20.0);
-
-        foodItems.add(a);
-        foodItems.add(b);
-
-        IngredientListAdapter ila = new IngredientListAdapter(this, this.getApplicationContext(), foodItems);
-        ((ListView) findViewById(R.id.mealListView)).setAdapter(ila);
-
     }
 
     @Override
@@ -81,5 +83,19 @@ public class DailySummary extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void initData() {
+        foodItems = new ArrayList<>();
+        Food a = new Food("pizza", "slice", "1", 8.8, 20.0, 50.0, 10.0, 20.0);
+        Food b = new Food("pasta", "bowl", "2/3", 8.8, 20.0, 50.0, 10.0, 20.0);
+        foodItems.add(a);
+        foodItems.add(b);
+    }
+
+    private void initAdapter() {
+        FoodAdapter ca = new FoodAdapter(foodItems);
+        rv.setAdapter(ca);
     }
 }
