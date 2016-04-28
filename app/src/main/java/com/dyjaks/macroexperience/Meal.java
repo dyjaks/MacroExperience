@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Meal {
     private int ID;
-    private String mealName;
+    public String mealName;
     private Date date;
     private List<Ingredient> ingredients;
 
@@ -19,5 +19,15 @@ public class Meal {
 
     public List<Ingredient> getIngredients() {
         return this.ingredients;
+    }
+
+    public String getCalories() {
+        double calories = 0.0;
+
+        for(Ingredient ig : ingredients) {
+            calories += ig.GetCalories();
+        }
+
+        return String.format("%.2f", calories);
     }
 }

@@ -80,6 +80,15 @@ public class Ingredient {
     }
 
     public Double GetCalories() {
-        return (Fat * 9) + (Protein * 4) + (Carb * 4);
+        return ((Fat * 9) + (Protein * 4) + (Carb * 4) * ServingSizeAsDouble());
+    }
+
+    private Double ServingSizeAsDouble() {
+        try {
+            return Double.parseDouble(Size);
+        } catch (NumberFormatException e) {
+            String[] parts = Size.split("/");
+            return Double.parseDouble(parts[0]) / Double.parseDouble(parts[1]);
+        }
     }
 }

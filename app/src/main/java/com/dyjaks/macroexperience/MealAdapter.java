@@ -1,10 +1,12 @@
 package com.dyjaks.macroexperience;
 
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +16,16 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     public static class MealViewHolder extends RecyclerView.ViewHolder {
         IngredientAdapter ia = new IngredientAdapter(new ArrayList<Ingredient>());
+        protected TextView mealTitle;
+        protected TextView mealCalories;
 
         public MealViewHolder(View v) {
             super(v);
+            mealTitle = (TextView)v.findViewById(R.id.mealTitle);
+            mealCalories = (TextView)v.findViewById(R.id.mealCalories);
+
             RecyclerView foodRecyclerView = (RecyclerView)v.findViewById(R.id.ingredientRecyclerView);
-            foodRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+            foodRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
             foodRecyclerView.setAdapter(ia);
         }
 
@@ -38,9 +45,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MealViewHolder foodViewHolder, int i) {
+    public void onBindViewHolder(MealViewHolder mealViewHolder, int i) {
+        mealViewHolder.mealTitle.setText(mealList.get(i).mealName);
+        mealViewHolder.mealCalories.setText(mealList.get(i).getCalories() + " Cals");
+
         Meal ml = mealList.get(i);
-        foodViewHolder.OnBind(ml);
+        mealViewHolder.OnBind(ml);
     }
 
     @Override

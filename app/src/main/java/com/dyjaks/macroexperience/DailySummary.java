@@ -21,19 +21,14 @@ public class DailySummary extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_daily_summary);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         rv = ((RecyclerView)findViewById(R.id.mealRecyclerView));
-        //rv.setHasFixedSize(false);
-        //rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        rv.setHasFixedSize(false);
         rv.setLayoutManager(llm);
-
 
         TabHost host = (TabHost)findViewById(R.id.tabHost);
         host.setup();
@@ -89,12 +84,16 @@ public class DailySummary extends Activity {
     private void initData() {
         meals = new ArrayList<>();
         List<Ingredient> iList = new ArrayList<>();
+        List<Ingredient> iList2 = new ArrayList<>();
         Ingredient a = new Ingredient("pizza", "slice", "1", 8.8, 20.0, 50.0, 10.0, 20.0);
         Ingredient b = new Ingredient("pasta", "bowl", "2/3", 8.8, 20.0, 50.0, 10.0, 20.0);
         iList.add(a);
-        iList.add(b);
         Meal ml = new Meal("Lunch", iList);
+        iList2.add(a);
+        iList2.add(b);
+        Meal ml2 = new Meal("Dinner", iList2);
         meals.add(ml);
+        meals.add(ml2);
     }
 
     private void initAdapter() {
