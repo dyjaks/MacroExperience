@@ -5,7 +5,7 @@ import javax.security.auth.Subject;
 /**
  * Created by shawnd on 4/25/2016.
  */
-public class Food {
+public class Ingredient {
     private int ID;
     private String Name;
     private String Serving;
@@ -20,9 +20,7 @@ public class Food {
     private Double Fiber;
     private Double Sugar;
 
-    public boolean anime=false;
-
-    public Food(String name, String serving, String Size, Double Protein, Double Fat, Double Carb, Double Fiber, Double Sugar) {
+    public Ingredient(String name, String serving, String Size, Double Protein, Double Fat, Double Carb, Double Fiber, Double Sugar) {
         this.Name = name;
         this.Serving = serving;
         this.Size = Size;
