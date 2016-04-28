@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/meal_overflow_rename"
+        android:title="rename" />
+
+    <item
+        android:id="@+id/meal_overflow_delete"
+        android:title="delete" />
+
+    <item
+        android:id="@+id/meal_overflow_copy"
+        android:title="copy" />
+
+</menu>
