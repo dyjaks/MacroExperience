@@ -1,25 +1,24 @@
 package com.dyjaks.macroexperience;
 
-import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
 
     public static class MealViewHolder extends RecyclerView.ViewHolder {
-        IngredientAdapter ia;
+        IngredientAdapter ia = new IngredientAdapter(new ArrayList<Ingredient>());
 
         public MealViewHolder(View v) {
             super(v);
             RecyclerView foodRecyclerView = (RecyclerView)v.findViewById(R.id.ingredientRecyclerView);
+            foodRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             foodRecyclerView.setAdapter(ia);
         }
 
@@ -41,6 +40,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
     @Override
     public void onBindViewHolder(MealViewHolder foodViewHolder, int i) {
         Meal ml = mealList.get(i);
+        foodViewHolder.OnBind(ml);
     }
 
     @Override
