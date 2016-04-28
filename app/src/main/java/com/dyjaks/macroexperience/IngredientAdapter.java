@@ -1,13 +1,11 @@
 package com.dyjaks.macroexperience;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
@@ -19,23 +17,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         protected TextView vServing;
         protected TextView vServingSize;
 
-        IngredientAdapter ia;
-
         public IngredientViewHolder(View v) {
             super(v);
             vName =  (TextView)v.findViewById(R.id.foodName);
             vMacro = (TextView)v.findViewById(R.id.macros);
             vServing = (TextView)v.findViewById(R.id.serving);
             vServingSize = (TextView)v.findViewById(R.id.servingSize);
-        }
-
-        public void OnBind(final Ingredient ingredient) {
-            if (ia == null) {
-                List<Ingredient> q = new ArrayList<Ingredient>() {{ add(ingredient); }};
-                ia = new IngredientAdapter(q);
-            } else
-                ia.add(ingredient);
-            ia.notifyDataSetChanged();
         }
     }
 
