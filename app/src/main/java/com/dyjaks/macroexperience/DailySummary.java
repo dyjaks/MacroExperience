@@ -1,6 +1,7 @@
 package com.dyjaks.macroexperience;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import com.github.clans.fab.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -45,12 +46,11 @@ public class DailySummary extends Activity {
         spec.setIndicator(getString(R.string.meal_tab));
         host.addTab(spec);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_ingredient);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(DailySummary.this, EditIngredient.class));
             }
         });
 

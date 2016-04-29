@@ -28,7 +28,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/weightListView"
                         android:layout_width="match_parent"
@@ -39,8 +38,8 @@
                     android:id="@+id/mealLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:background="#ffffff"  >
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/mealRecyclerView"
                         android:padding="10dp"
