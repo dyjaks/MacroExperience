@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.github.clans.fab.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,14 +17,21 @@ import android.widget.TabHost;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailySummary extends Activity {
+public class DailySummary extends AppCompatActivity {
+    private MacroSqliteOpenHelper dbHelper;
+    private IngredientDataSource ids;
     private List<Meal> meals;
+    private List<Ingredient> ingList;
     private RecyclerView rv;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_summary);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -54,6 +63,11 @@ public class DailySummary extends Activity {
             }
         });
 
+        dbHelper = dbHelper.getInstance(this);
+        ids = new IngredientDataSource();
+        ids.initializeInstance(dbHelper);
+        ingList = ids.getAllIngredients();
+
         initData();
         initAdapter();
     }
@@ -80,20 +94,23 @@ public class DailySummary extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        //ids.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        ids.getInstance().close();
+        super.onPause();
+    }
+
 
     private void initData() {
         meals = new ArrayList<>();
-        List<Ingredient> iList = new ArrayList<>();
-        List<Ingredient> iList2 = new ArrayList<>();
-        Ingredient a = new Ingredient("pizza", "slice", "1", 8.8, 20.0, 50.0, 10.0, 20.0);
-        Ingredient b = new Ingredient("pasta", "bowl", "2/3", 8.8, 20.0, 50.0, 10.0, 20.0);
-        iList.add(a);
-        Meal ml = new Meal("Lunch", iList);
-        iList2.add(a);
-        iList2.add(b);
-        Meal ml2 = new Meal("Dinner", iList2);
+        Meal ml = new Meal("Lunch", ingList);
         meals.add(ml);
-        meals.add(ml2);
     }
 
     private void initAdapter() {

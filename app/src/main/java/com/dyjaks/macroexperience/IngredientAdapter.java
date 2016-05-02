@@ -41,7 +41,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
         foodViewHolder.vName.setText(item.GetName());
         foodViewHolder.vMacro.setText("P:" + String.format("%.2f", item.GetProtein() * servingConvert(item.GetServingSize())) +
-                " C:" + String.format("%.2f", item.GetCarb() * servingConvert(item.GetServingSize())) + "(" + String.format("%.2f", item.GetFiber() * servingConvert(item.GetServingSize())) + ")" +
+                " C:" + String.format("%.2f", item.GetCarb() * servingConvert(item.GetServingSize())) +
                 " F:" + String.format("%.2f", item.GetFat() * servingConvert(item.GetServingSize())));
         foodViewHolder.vServing.setText(item.GetServing());
         foodViewHolder.vServingSize.setText(item.GetServingSize());

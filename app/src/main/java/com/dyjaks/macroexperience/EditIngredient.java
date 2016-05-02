@@ -1,6 +1,9 @@
 package com.dyjaks.macroexperience;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.renderscript.Double2;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +25,8 @@ public class EditIngredient extends AppCompatActivity {
     private TextInputLayout ilName, ilServing, ilServingSize, ilFat, ilSfat, ilMfat, ilpFat,
                             ilChol, ilSod, ilCarb, ilFiber, ilSug, ilPro;
     private Button btnSave;
+    private IngredientDataSource idb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,39 +92,88 @@ public class EditIngredient extends AppCompatActivity {
      * Validating form
      */
     private void submitForm() {
-        if (!validateName()) {
+        if (!validateString(ingName, ilName, "Ingredient Name")) {
             return;
         }
-        if (!validateProtein()) {
+        if (!validateString(ingServingSize, ilServingSize, "Serving Size")) {
+            return;
+        }
+        if (!validateNonZeroMacro(ingServing, ilServing, "Serving")) {
+            return;
+        }
+        if (!validateNonZeroMacro(ingPro, ilPro, "Protein")) {
+            return;
+        }
+        if (!validateNonZeroMacro(ingCarb, ilCarb, "Carb")) {
+            return;
+        }
+        if (!validateNonZeroMacro(intFat, ilFat, "Fat")) {
             return;
         }
 
-        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+        idb.createIngredient(ingName.getText().toString(),
+                ingServing.getText().toString(),
+                ingServingSize.getText().toString(),
+                Double.parseDouble(ingPro.getText().toString()),
+                Double.parseDouble(intFat.getText().toString()),
+                Double.parseDouble(ingSfat.getText().toString()),
+                Double.parseDouble(ingmFat.getText().toString()),
+                Double.parseDouble(ingPFat.getText().toString()),
+                Double.parseDouble(ingChol.getText().toString()),
+                Double.parseDouble(ingCarb.getText().toString()),
+                Double.parseDouble(ingFiber.getText().toString()),
+                Double.parseDouble(ingSug.getText().toString())
+        );
+
+        finish();
     }
 
-    private boolean validateName() {
-        if (ingName.getText().toString().trim().isEmpty()) {
-            ilName.setError("Name is required!");
-            requestFocus(ingName);
+    private Ingredient addOptionIngredients(Ingredient i ) {
+        if (!ingSug.getText().toString().trim().isEmpty())
+            i.SetSugar(Double.parseDouble(ingSug.getText().toString()));
+        if (!ingFiber.getText().toString().trim().isEmpty())
+            i.SetFiber(Double.parseDouble(ingFiber.getText().toString()));
+        if (!ingChol.getText().toString().trim().isEmpty())
+            i.SetChol(Double.parseDouble(ingChol.getText().toString()));
+        if (!ingmFat.getText().toString().trim().isEmpty())
+            i.SetMonoFat(Double.parseDouble(ingmFat.getText().toString()));
+        if (!ingPFat.getText().toString().trim().isEmpty())
+            i.SetPolyFat(Double.parseDouble(ingPFat.getText().toString()));
+        if (!ingSfat.getText().toString().trim().isEmpty())
+            i.SetSatFat(Double.parseDouble(ingSfat.getText().toString()));
+
+        return i;
+    }
+
+    private boolean validateString(EditText mText, TextInputLayout mLayout, String mName) {
+        if (mText.getText().toString().trim().isEmpty()) {
+            mLayout.setError(mName + " is required!");
+            requestFocus(mText);
             return false;
         } else {
-            ilName.setErrorEnabled(false);
+            mLayout.setErrorEnabled(false);
         }
 
         return true;
     }
 
-    private boolean validateProtein() {
-        double p = Double.parseDouble(ingPro.getText().toString());
-        if (p < 0) {
-            ingPro.setError("Protein macro is required!");
-            requestFocus(ingPro);
-            return false;
-        } else {
-            ilPro.setErrorEnabled(false);
-        }
+    private boolean validateNonZeroMacro(EditText mText, TextInputLayout mLayout, String mName) {
+        try {
+            double p = Double.parseDouble(mText.getText().toString());
+            if (p < 0) {
+                mLayout.setError(mName + " is required!");
+                requestFocus(mText);
+                return false;
+            } else {
+                mLayout.setErrorEnabled(false);
+            }
 
-        return true;
+            return true;
+        } catch (Exception e) {
+            mText.setError(mName + " macro is required!");
+            requestFocus(mText);
+            return false;
+        }
     }
 
 
@@ -146,7 +200,22 @@ public class EditIngredient extends AppCompatActivity {
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
                 case R.id.input_edit_name:
-                    validateName();
+                    validateString(ingName, ilName, "Ingredient Name");
+                    break;
+                case R.id.input_edit_servingsize:
+                    validateString(ingServingSize, ilServingSize, "Serving Size");
+                    break;
+                case R.id.input_edit_servings:
+                    validateNonZeroMacro(ingServing, ilServing, "Serving Name");
+                    break;
+                case R.id.input_edit_tFat:
+                    validateNonZeroMacro(intFat, ilFat, "Total fat");
+                    break;
+                case R.id.input_edit_chol:
+                    validateNonZeroMacro(ingCarb, ilCarb, "Carb");
+                    break;
+                case R.id.input_edit_protein:
+                    validateNonZeroMacro(ingPro, ilPro, "Protein");
                     break;
             }
         }

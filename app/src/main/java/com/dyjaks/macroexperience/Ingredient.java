@@ -6,7 +6,7 @@ import javax.security.auth.Subject;
  * Created by shawnd on 4/25/2016.
  */
 public class Ingredient {
-    private int ID;
+    private long ID;
     private String Name;
     private String Serving;
     private String Size;
@@ -20,16 +20,18 @@ public class Ingredient {
     private Double Fiber;
     private Double Sugar;
 
-    public Ingredient(String name, String serving, String Size, Double Protein, Double Fat, Double Carb, Double Fiber, Double Sugar) {
+    public Ingredient(long Id, String name, String serving, String Size, Double Protein, Double Fat, Double Carb) {
+        this.ID = Id;
         this.Name = name;
         this.Serving = serving;
         this.Size = Size;
         this.Protein = Protein;
         this.Fat = Fat;
         this.Carb = Carb;
-        this.Fiber = Fiber;
-        this.Sugar = Sugar;
     }
+    public long GetId() {return ID; }
+
+    public void SetId(long i) {this.ID = i;}
 
     public String GetName(){
         return Name;
@@ -55,8 +57,12 @@ public class Ingredient {
         return Saturated_Fat;
     }
 
-    public Double GetMononFat() {
+    public Double GetMonoFat() {
         return Mono_Fat;
+    }
+
+    public Double GetPolyFat() {
+        return Poly_Fat;
     }
 
     public Double GetChol() {
@@ -68,16 +74,26 @@ public class Ingredient {
     }
 
     public Double GetNetCarb() {
-        return Carb - Fiber;
+        if (Fiber != null)
+            return Carb - Fiber;
+        else
+            return Carb;
     }
 
     public Double GetFiber() {
         return Fiber;
     }
 
-    public Double GetSubar() {
+    public Double GetSugar() {
         return Sugar;
     }
+
+    public void SetMonoFat(double i) {this.Mono_Fat = i;}
+    public void SetSatFat(double i) {this.Saturated_Fat = i;}
+    public void SetPolyFat(double i) {this.Poly_Fat = i;}
+    public void SetChol(double i) {this.Cholesterol = i;}
+    public void SetFiber(double i) {this.Fiber = i;}
+    public void SetSugar(double i) {this.Sugar = i;}
 
     public Double GetCalories() {
         return ((Fat * 9) + (Protein * 4) + (Carb * 4) * ServingSizeAsDouble());
