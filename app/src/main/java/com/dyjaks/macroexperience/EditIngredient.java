@@ -86,6 +86,9 @@ public class EditIngredient extends AppCompatActivity {
                 submitForm();
             }
         });
+
+        idb = new IngredientDataSource();
+        idb.initializeInstance(MacroSqliteOpenHelper.getInstance(this));
     }
 
     /**
@@ -114,15 +117,15 @@ public class EditIngredient extends AppCompatActivity {
         idb.createIngredient(ingName.getText().toString(),
                 ingServing.getText().toString(),
                 ingServingSize.getText().toString(),
-                Double.parseDouble(ingPro.getText().toString()),
-                Double.parseDouble(intFat.getText().toString()),
-                Double.parseDouble(ingSfat.getText().toString()),
-                Double.parseDouble(ingmFat.getText().toString()),
-                Double.parseDouble(ingPFat.getText().toString()),
-                Double.parseDouble(ingChol.getText().toString()),
-                Double.parseDouble(ingCarb.getText().toString()),
-                Double.parseDouble(ingFiber.getText().toString()),
-                Double.parseDouble(ingSug.getText().toString())
+                ingPro.getText().toString(),
+                intFat.getText().toString(),
+                ingSfat.getText().toString(),
+                ingmFat.getText().toString(),
+                ingPFat.getText().toString(),
+                ingChol.getText().toString(),
+                ingCarb.getText().toString(),
+                ingFiber.getText().toString(),
+                ingSug.getText().toString()
         );
 
         finish();

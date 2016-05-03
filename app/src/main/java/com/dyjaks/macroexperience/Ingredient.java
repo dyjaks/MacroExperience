@@ -1,5 +1,7 @@
 package com.dyjaks.macroexperience;
 
+import android.media.Image;
+
 import javax.security.auth.Subject;
 
 /**
@@ -45,47 +47,47 @@ public class Ingredient {
         return Size;
     }
 
-    public Double GetProtein() {
-        return Protein;
+    public String GetProtein() {
+        return String.format("%.2f", Protein * ServingSizeAsDouble());
     }
 
-    public Double GetFat() {
-        return Fat;
+    public String GetFat() {
+        return String.format("%.2f", Fat * ServingSizeAsDouble());
     }
 
-    public Double GetSatFat() {
-        return Saturated_Fat;
+    public String GetSatFat() {
+        return (Saturated_Fat == null) ? "" : String.format("%.2f", Saturated_Fat * ServingSizeAsDouble());
     }
 
-    public Double GetMonoFat() {
-        return Mono_Fat;
+    public String GetMonoFat() {
+        return (Mono_Fat == null) ? "" : String.format("%.2f", Mono_Fat * ServingSizeAsDouble());
     }
 
-    public Double GetPolyFat() {
-        return Poly_Fat;
+    public String GetPolyFat() {
+        return (Poly_Fat == null) ? "" :  String.format("%.2f", Poly_Fat * ServingSizeAsDouble());
     }
 
-    public Double GetChol() {
-        return Cholesterol;
+    public String GetChol() {
+        return (Cholesterol == null) ? "" : String.format("%.2f", Cholesterol * ServingSizeAsDouble());
     }
 
-    public Double GetCarb() {
-        return Carb;
+    public String GetCarb() {
+        return String.format("%.2f", Carb * ServingSizeAsDouble());
     }
 
-    public Double GetNetCarb() {
+    public String GetNetCarb() {
         if (Fiber != null)
-            return Carb - Fiber;
+            return String.format("%.2f", (Carb - Fiber) * ServingSizeAsDouble());
         else
-            return Carb;
+            return String.format("%.2f", Carb * ServingSizeAsDouble());
     }
 
-    public Double GetFiber() {
-        return Fiber;
+    public String GetFiber() {
+        return (Fiber == null) ? "" :  String.format("%.2f", Fiber * ServingSizeAsDouble());
     }
 
-    public Double GetSugar() {
-        return Sugar;
+    public String GetSugar() {
+        return (Sugar == null) ? "" : String.format("%.2f", Sugar * ServingSizeAsDouble());
     }
 
     public void SetMonoFat(double i) {this.Mono_Fat = i;}
@@ -95,15 +97,15 @@ public class Ingredient {
     public void SetFiber(double i) {this.Fiber = i;}
     public void SetSugar(double i) {this.Sugar = i;}
 
-    public Double GetCalories() {
-        return ((Fat * 9) + (Protein * 4) + (Carb * 4) * ServingSizeAsDouble());
+    public String GetCalories() {
+        return String.format("%.2f", ((Fat * 9) + (Protein * 4) + (Carb * 4) * ServingSizeAsDouble()));
     }
 
     private Double ServingSizeAsDouble() {
         try {
-            return Double.parseDouble(Size);
+            return Double.parseDouble(Serving);
         } catch (NumberFormatException e) {
-            String[] parts = Size.split("/");
+            String[] parts = Serving.split("/");
             return Double.parseDouble(parts[0]) / Double.parseDouble(parts[1]);
         }
     }

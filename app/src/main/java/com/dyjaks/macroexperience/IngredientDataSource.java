@@ -42,9 +42,9 @@ public class IngredientDataSource {
         dbHelper.close();
     }
 
-    public Ingredient createIngredient(String name, String serving, String servingSize, Double protein,
-                                        Double fat, Double sFat, Double mFat, Double pFat, Double chol,
-                                        Double carb, Double fiber, Double sugar) {
+    public Ingredient createIngredient(String name, String serving, String servingSize, String protein,
+                                       String fat, String sFat, String mFat, String pFat, String chol,
+                                       String carb, String fiber, String sugar) {
         ContentValues values = new ContentValues();
         values.put(MacroSqliteOpenHelper.COLUMN_NAME, name);
         values.put(MacroSqliteOpenHelper.COLUMN_SERVING, serving);

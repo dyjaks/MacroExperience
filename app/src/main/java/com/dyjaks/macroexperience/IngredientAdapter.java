@@ -40,9 +40,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         Ingredient item = ingredientList.get(i);
 
         foodViewHolder.vName.setText(item.GetName());
-        foodViewHolder.vMacro.setText("P:" + String.format("%.2f", item.GetProtein() * servingConvert(item.GetServingSize())) +
-                " C:" + String.format("%.2f", item.GetCarb() * servingConvert(item.GetServingSize())) +
-                " F:" + String.format("%.2f", item.GetFat() * servingConvert(item.GetServingSize())));
+        foodViewHolder.vMacro.setText("P:" + String.format(item.GetProtein() + " C:" + item.GetCarb() + " F:" + item.GetFat()));
         foodViewHolder.vServing.setText(item.GetServing());
         foodViewHolder.vServingSize.setText(item.GetServingSize());
     }
@@ -64,15 +62,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     public void add(Ingredient ingredient) {
         ingredientList.add(ingredient);
-    }
-
-    private double servingConvert(String serving) {
-        try {
-            return Double.parseDouble(serving);
-        } catch (NumberFormatException e) {
-            String[] parts = serving.split("/");
-            return Double.parseDouble(parts[0]) / Double.parseDouble(parts[1]);
-        }
     }
 
 }

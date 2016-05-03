@@ -28,7 +28,7 @@ public class Meal {
     public String getCalories() {
         double calories = 0.0;
         for(Ingredient ig : ingredients) {
-            calories += ig.GetCalories();
+            calories += Double.parseDouble(ig.GetCalories());
         }
         return String.format("%.2f", calories);
     }
