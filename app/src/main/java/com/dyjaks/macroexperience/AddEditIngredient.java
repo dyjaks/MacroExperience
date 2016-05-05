@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditIngredient extends AppCompatActivity {
+public class AddEditIngredient extends AppCompatActivity {
 
     private Toolbar toolbar;
     private EditText ingName, ingServingSize, ingServing, intFat, ingSfat, ingmFat, ingPFat,

@@ -19,14 +19,14 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     public static class MealViewHolder extends RecyclerView.ViewHolder {
         IngredientAdapter ia = new IngredientAdapter(new ArrayList<Ingredient>());
-        protected TextView mealTitle;
+        protected TextView mealMacros;
         protected TextView mealTime;
         protected TextView mealCalories;
         protected ImageView mealOverflow;
 
         public MealViewHolder(View v) {
             super(v);
-            mealTitle = (TextView)v.findViewById(R.id.mealTitle);
+            mealMacros = (TextView)v.findViewById(R.id.mealMacros);
             mealTime = (TextView)v.findViewById(R.id.mealTime);
             mealCalories = (TextView)v.findViewById(R.id.mealCalories);
             mealOverflow = (ImageView)v.findViewById(R.id.mealOverflow);
@@ -54,7 +54,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     @Override
     public void onBindViewHolder(MealViewHolder mealViewHolder, int i) {
-        mealViewHolder.mealTitle.setText("@");
+        mealViewHolder.mealMacros.setText("P:" + mealList.get(i).getProtein() + " C:" + mealList.get(i).getCarbs() + " F:" + mealList.get(i).getFat());
         mealViewHolder.mealCalories.setText(mealList.get(i).getCalories() + " Cals");
         mealViewHolder.mealTime.setText(" @ " + mealList.get(i).getTime());
 

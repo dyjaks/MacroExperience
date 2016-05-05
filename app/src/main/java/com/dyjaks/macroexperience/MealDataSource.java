@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -110,8 +112,8 @@ public class MealDataSource {
         }
         return new Meal(
                 cursor.getLong(0),
-                cursor.getString(1),
-                cursor.getString(2),
+                new DateTime(cursor.getString(1)),
+                new LocalTime(cursor.getString(2)),
                 ig);
     }
 }

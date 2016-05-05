@@ -19,17 +19,17 @@
             android:layout_alignParentTop="true"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:id="@+id/mealTitle"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mealTitle"
             android:id="@+id/mealCalories"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/mealCalories"
+            android:id="@+id/mealMacros"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/mealTitle"
+            android:layout_toRightOf="@+id/mealCalories"
             android:id="@+id/mealTime"/>
         <ImageView
             android:id="@+id/mealOverflow"
