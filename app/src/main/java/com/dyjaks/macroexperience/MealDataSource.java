@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,7 +21,7 @@ public class MealDataSource {
     // Database fields
     private MacroSqliteOpenHelper dbHelper;
     private String[] allColumns = { MacroSqliteOpenHelper.COLUMN_ID,
-            MacroSqliteOpenHelper.COLUMN_DATE, MacroSqliteOpenHelper.COLUMN_TIME, MacroSqliteOpenHelper.COLUMN_INGREDIENTS};
+            MacroSqliteOpenHelper.COLUMN_DATE, MacroSqliteOpenHelper.COLUMN_INGREDIENTS};
 
     public synchronized void initializeInstance(MacroSqliteOpenHelper helper) {
         if (dbHelper == null) {
@@ -47,7 +46,6 @@ public class MealDataSource {
     public Meal createMeal(String date, String time, String ingredients) {
         ContentValues values = new ContentValues();
         values.put(MacroSqliteOpenHelper.COLUMN_DATE, date);
-        values.put(MacroSqliteOpenHelper.COLUMN_TIME, time);
         values.put(MacroSqliteOpenHelper.COLUMN_INGREDIENTS, ingredients);
 
         long insertId = mDatabase.insert(MacroSqliteOpenHelper.TABLE_MEALS, null,
@@ -113,7 +111,6 @@ public class MealDataSource {
         return new Meal(
                 cursor.getLong(0),
                 new DateTime(cursor.getString(1)),
-                new LocalTime(cursor.getString(2)),
                 ig);
     }
 }

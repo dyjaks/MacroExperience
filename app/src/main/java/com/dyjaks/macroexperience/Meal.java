@@ -3,31 +3,28 @@ package com.dyjaks.macroexperience;
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Meal {
     private long ID;
     private DateTime date;
-    private LocalTime time;
     private List<Ingredient> ingredients;
 
-    public Meal(DateTime date, LocalTime time) {
+    public Meal(DateTime date) {
         this.date = date;
-        this.time = time;
-        this.ingredients = null;
+        this.ingredients = new ArrayList<Ingredient>();
     }
 
     public Meal(List<Ingredient> ingredients) {
         this.date = DateTime.now();
-        this.time = LocalTime.now();
         this.ingredients = ingredients;
     }
 
-    public Meal(long id, DateTime date, LocalTime time, List<Ingredient> ingredients) {
+    public Meal(long id, DateTime date, List<Ingredient> ingredients) {
         this.ID = id;
         this.date = date;
-        this.time = time;
         this.ingredients = ingredients;
     }
 
@@ -70,6 +67,6 @@ public class Meal {
     }
 
     public String getTime() {
-        return time.toString();
+        return date.toLocalTime().toString();
     }
 }

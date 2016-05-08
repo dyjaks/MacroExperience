@@ -26,7 +26,6 @@ public class MacroSqliteOpenHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_MEALS = "meals";
     public static final String COLUMN_DATE = "mealDate";
-    public static final String COLUMN_TIME = "mealTime";
     public static final String COLUMN_INGREDIENTS = "ingredients";
 
     private static final String DATABASE_NAME = "macros.db";
@@ -51,7 +50,6 @@ public class MacroSqliteOpenHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE_ML = "create table "
             + TABLE_MEALS + "(" + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_DATE + " text not null, "
-            + COLUMN_TIME + " text not null, "
             + COLUMN_INGREDIENTS + " text not null);";
 
     public MacroSqliteOpenHelper(Context context) {

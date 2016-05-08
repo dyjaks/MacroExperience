@@ -3,7 +3,6 @@ package com.dyjaks.macroexperience;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.datetimepicker.date.DatePickerDialog;
 import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
 
@@ -19,17 +18,13 @@ import android.view.MenuItem;
 import android.widget.TabHost;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-public class DailySummary extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class DailySummary extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private MacroSqliteOpenHelper dbHelper;
     private IngredientDataSource ids;
     private List<Meal> meals;
@@ -37,10 +32,9 @@ public class DailySummary extends AppCompatActivity implements DatePickerDialog.
     private RecyclerView rv;
     private Toolbar toolbar;
     private HashMap<DateTime, List<Meal>> mealMap;
+    private MealAdapter ma;
 
     private Calendar calendar;
-    private DateFormat dateFormat;
-    private SimpleDateFormat timeFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +57,6 @@ public class DailySummary extends AppCompatActivity implements DatePickerDialog.
         // prepare mealMap
         mealMap = new HashMap<>();
         calendar = Calendar.getInstance();
-        dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
-        timeFormat = new SimpleDateFormat("HH:MM", Locale.getDefault());
 
         // BodyWeight tab
         TabHost.TabSpec spec = host.newTabSpec(getString(R.string.bw_tab));
@@ -90,10 +82,7 @@ public class DailySummary extends AppCompatActivity implements DatePickerDialog.
         addMealFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DateTime now = DateTime.now();
-                DatePickerDialog.newInstance(DailySummary.this, now.getYear(), now.getMonthOfYear(), now.getDayOfMonth()).show(getFragmentManager(), "datePicker");
-                Meal meal = new Meal(new DateTime(calendar.getTime().ye), new LocalTime(timeFormat.format(calendar.getTime())));
-                mealMap.put(new DateTime(dateFormat.format(calendar.getTime())), meals);
+                TimePickerDialog.newInstance(DailySummary.this, DateTime.now().toLocalTime().getHourOfDay(), DateTime.now().toLocalTime().getMinuteOfHour(), true).show(getFragmentManager(), "timePicker");
             }
         });
 
@@ -128,17 +117,13 @@ public class DailySummary extends AppCompatActivity implements DatePickerDialog.
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        TimePickerDialog.newInstance(DailySummary.this, DateTime.now().getHourOfDay(), DateTime.now().getMinuteOfHour(), true).show(getFragmentManager(), "timePicker");
-        calendar.set(year, monthOfYear, dayOfMonth);
-    }
-
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
+
+        meals.add(new Meal(new DateTime(calendar.getTime())));
+        ma.notifyDataSetChanged();
     }
 
     @Override
@@ -161,7 +146,8 @@ public class DailySummary extends AppCompatActivity implements DatePickerDialog.
     }
 
     private void initAdapter() {
-        MealAdapter ca = new MealAdapter(meals);
-        rv.setAdapter(ca);
+        ma = new MealAdapter(meals);
+        mealMap.put(new DateTime(new DateTime(calendar.getTime())), meals);
+        rv.setAdapter(ma);
     }
 }
